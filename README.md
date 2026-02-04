@@ -1,81 +1,96 @@
-# Flipkart Product Review Sentiment Analysis (Machine Learning)
+# 🛒 Flipkart Product Review Sentiment Analysis (Machine Learning)
 
 ## Project Overview
-This project implements an end-to-end sentiment analysis system for Flipkart product reviews using Machine Learning and Natural Language Processing (NLP). The objective is to classify customer reviews into Positive, Neutral, or Negative sentiments.
+This project implements an end-to-end **sentiment analysis system** for Flipkart product reviews using **Machine Learning and Natural Language Processing (NLP)**.
 
-The project focuses on building a clean ML pipeline with proper preprocessing, evaluation, and generalization rather than maximizing accuracy artificially.
-
----
-
-## Problem Statement
-Customer reviews contain valuable feedback, but manual analysis is inefficient. This project automates sentiment classification to help analyze customer opinions at scale.
+The goal is to automatically classify customer reviews into **Positive, Neutral, or Negative** sentiments by building a clean, reproducible, and deployment-ready ML pipeline.
 
 ---
 
-## Dataset Description
-- Source: Flipkart product reviews (CSV format)
-- Size: ~2300 reviews
-- Type: Real-world, noisy text data
+## 📌 Problem Statement
+E-commerce platforms like Flipkart receive a massive volume of customer reviews daily.  
+Manually analyzing this feedback is inefficient and error-prone.
+
+This project automates sentiment classification to help understand customer opinions at scale using NLP techniques.
+
+---
+
+## 🗂️ Dataset Description
+- **Source:** Flipkart product reviews (CSV format)
+- **Total records:** ~189,000 reviews
+- **Data type:** Real-world, noisy text data
 
 ### Columns Used
-- Product_name: Name of the product
-- review_text: Customer review text
-- rating: Star rating (1–5)
-- sentiment: Derived sentiment label (Positive / Neutral / Negative)
-- clean_review: Preprocessed review text
+- `Summary` – Short summary of the review  
+- `Review` – Full customer review text  
+- `Rate` – Star rating (1–5)  
+
+### Engineered Columns
+- `review_text` – Combined summary and review text  
+- `clean_review` – Preprocessed review text  
+- `sentiment` – Derived label (Positive / Neutral / Negative)
 
 ---
 
-## Project Workflow
-1. Data loading and inspection
-2. Dataset structure cleaning
-3. Sentiment label creation from ratings
-4. Text preprocessing (cleaning, stopword removal, lemmatization)
-5. Feature extraction using TF-IDF (3000 features)
-6. Model training using Logistic Regression
-7. Model evaluation using accuracy, F1-score, and confusion matrix
-8. Handling class imbalance using class_weight='balanced'
-9. Model saving and finalization
-10. Deployment-ready prediction pipeline
-11. Final reporting and documentation
-12. Prediction logging and monitoring readiness
+## 🧠 Sentiment Labeling Logic
+
+| Rating | Sentiment |
+|------|-----------|
+| Rating > 4 | Positive |
+| Rating = 3 | Neutral |
+| Rating < 3 | Negative |
 
 ---
 
-## Model and Techniques
-- Algorithm: Logistic Regression
-- Feature Engineering: TF-IDF (unigrams + bigrams)
-- NLP Library: NLTK
-- Class Handling: Balanced class weights
-- Evaluation Metrics: Accuracy, Precision, Recall, F1-score, Confusion Matrix
+## 🔄 Project Workflow
 
-
----
-
-## Sample Prediction
-Input:
-battery backup is poor but performance is good
-
-Output:
-Negative
-
----
-
-## How to Run the Project
-
-### Install Dependencies
-pip install -r requirements.txt
-
-### Run the Notebook
-Open:
-notebooks/sentiment_analysis.ipynb
-
-### Run Streamlit App (Optional)
-streamlit run app.py
+1. Data loading and inspection  
+2. Column selection and cleaning  
+3. Sentiment label creation from ratings  
+4. Duplicate removal  
+5. Text preprocessing:
+   - Lowercasing  
+   - Removing special characters  
+   - Stopword removal  
+   - Lemmatization  
+6. Feature extraction using **TF-IDF (unigrams + bigrams)**  
+7. Train-test split with stratification  
+8. Model training using Logistic Regression  
+9. Handling class imbalance using `class_weight='balanced'`  
+10. Model evaluation using accuracy, precision, recall, F1-score, and confusion matrix  
+11. Model persistence using `joblib`  
+12. Deployment-ready prediction pipeline  
 
 ---
 
-## Limitations
-- Neutral sentiment is ambiguous and overlaps with positive and negative language
-- TF-IDF does not capture deep semantic meaning
-- Sarcasm and nuanced opinions are difficult to classify
+## 🤖 Model and Techniques
+
+- **Algorithm:** Logistic Regression  
+- **Feature Engineering:** TF-IDF (max_features = 5000, ngram_range = (1,2))  
+- **NLP Library:** NLTK  
+- **Class Imbalance Handling:** Balanced class weights  
+- **Evaluation Metrics:**  
+  - Accuracy  
+  - Precision  
+  - Recall  
+  - F1-score  
+  - Confusion Matrix  
+
+---
+
+## 📊 Model Performance
+
+- **Training Accuracy:** ~91.5%  
+- **Test Accuracy:** ~89.6%  
+- The model demonstrates strong generalization with minimal overfitting  
+- Accuracy is supported by class-wise precision and recall due to dataset imbalance  
+
+---
+
+## 🔍 Sample Prediction
+
+**Input:**  
+battery backup is poor but performance is good  
+
+**Predicted Output:**  
+Negative  
